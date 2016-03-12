@@ -1,12 +1,21 @@
 package net.devromik.tree
 
+import net.devromik.tree.TreeNode.Companion.NOT_INDEXED
+
 /**
  * @author Shulnyaev Roman
  */
 class TreeNode<T>(
     parent: TreeNode<T>? = null,
     private val children: MutableList<TreeNode<T>> = mutableListOf(),
-    var data: T? = null) {
+    var data: T? = null,
+    internal var index: Int = NOT_INDEXED) {
+
+    // ****************************** //
+
+    companion object {
+        const val NOT_INDEXED: Int = -1;
+    }
 
     // ****************************** //
 

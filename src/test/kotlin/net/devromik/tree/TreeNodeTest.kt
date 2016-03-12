@@ -1,5 +1,6 @@
 package net.devromik.tree
 
+import net.devromik.tree.TreeNode.Companion.NOT_INDEXED
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -287,6 +288,11 @@ class TreeNodeTest {
         assertTrue(child_1.isRoot)
         assertTrue(child_2.isRoot)
         assertTrue(child_3.isRoot)
+    }
+
+    @Test fun initiallyIsNotIndexed() {
+        val root: TreeNode<Int> = root {}
+        assertEquals(NOT_INDEXED, root.index)
     }
 }
 
