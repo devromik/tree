@@ -41,6 +41,14 @@ class TreeNode<T>(
     fun childAt(pos: Int): TreeNode<T> = children[pos]
     val leftmostChild: TreeNode<T>? get() = if (!isLeaf) childAt(0) else null
     val rightmostChild: TreeNode<T>? get() = if (!isLeaf) childAt(childCount - 1) else null
+
+    fun removeChild(child: TreeNode<T>) {
+        children.remove(child)
+    }
+
+    fun removeAllChildren() {
+        children.clear()
+    }
 }
 
 fun <T> root(data: T? = null, init: TreeNode<T>.() -> Unit = {}): TreeNode<T> {

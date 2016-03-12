@@ -225,12 +225,49 @@ class TreeNodeTest {
         assertTrue(child_2_3_1.isLeaf)
         assertEquals("child_2_3_1", child_2_3_1.data)
     }
+
+    @Test fun childCanBeRemoved() {
+        val root: TreeNode<String> =
+            root() {
+                child()
+                child()
+                child()
+            }
+
+        assertEquals(3, root.childCount)
+
+        val child_1 = root.childAt(0)
+        val child_2 = root.childAt(1)
+        val child_3 = root.childAt(2)
+
+        root.removeChild(child_2)
+
+        assertEquals(2, root.childCount)
+        assertEquals(child_1, root.childAt(0))
+        assertEquals(child_3, root.childAt(1))
+
+        root.removeChild(child_3)
+        assertTrue(root.hasOnlyChild)
+        assertEquals(child_1, root.childAt(0))
+
+        root.removeChild(child_1)
+        assertTrue(root.isLeaf)
+    }
+
+    @Test fun allChildrenCanBeRemoved() {
+        val root: TreeNode<String> =
+            root() {
+                child()
+                child()
+                child()
+            }
+
+        assertFalse(root.isLeaf)
+
+        root.removeAllChildren()
+        assertTrue(root.isLeaf)
+    }
 }
-
-
-
-
-
 
 
 
