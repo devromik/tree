@@ -3,7 +3,7 @@ package net.devromik.tree
 /**
  * @author Shulnyaev Roman
  */
-open class TreeNode<T>(
+class TreeNode<T>(
     parent: TreeNode<T>? = null,
     private val children: MutableList<TreeNode<T>> = mutableListOf(),
     var data: T? = null) {
