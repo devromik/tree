@@ -237,21 +237,29 @@ class TreeNodeTest {
         assertEquals(3, root.childCount)
 
         val child_1 = root.childAt(0)
+        assertEquals(root, child_1.parent)
+
         val child_2 = root.childAt(1)
+        assertEquals(root, child_2.parent)
+
         val child_3 = root.childAt(2)
+        assertEquals(root, child_3.parent)
 
         root.removeChild(child_2)
 
         assertEquals(2, root.childCount)
         assertEquals(child_1, root.childAt(0))
+        assertTrue(child_2.isRoot)
         assertEquals(child_3, root.childAt(1))
 
         root.removeChild(child_3)
         assertTrue(root.hasOnlyChild)
         assertEquals(child_1, root.childAt(0))
+        assertTrue(child_3.isRoot)
 
         root.removeChild(child_1)
         assertTrue(root.isLeaf)
+        assertTrue(child_3.isRoot)
     }
 
     @Test fun allChildrenCanBeRemoved() {
@@ -264,8 +272,21 @@ class TreeNodeTest {
 
         assertFalse(root.isLeaf)
 
+        val child_1 = root.childAt(0)
+        assertEquals(root, child_1.parent)
+
+        val child_2 = root.childAt(1)
+        assertEquals(root, child_2.parent)
+
+        val child_3 = root.childAt(2)
+        assertEquals(root, child_3.parent)
+
         root.removeAllChildren()
+
         assertTrue(root.isLeaf)
+        assertTrue(child_1.isRoot)
+        assertTrue(child_2.isRoot)
+        assertTrue(child_3.isRoot)
     }
 }
 

@@ -44,9 +44,11 @@ class TreeNode<T>(
 
     fun removeChild(child: TreeNode<T>) {
         children.remove(child)
+        child.parent = null
     }
 
     fun removeAllChildren() {
+        children.forEach { it.parent = null }
         children.clear()
     }
 }
