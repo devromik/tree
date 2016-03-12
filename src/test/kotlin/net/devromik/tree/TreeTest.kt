@@ -167,6 +167,35 @@ class TreeTest {
         assertFalse(iter.hasNext)
     }
 
+    @Test fun canBeTraversedInLevelOrder() {
+        val tree: Tree<String> = Tree(
+            root("root") {
+                child("child_1") {
+                    child("child_1_1") {
+                        child("child_1_1_1")
+                    }
+                    child("child_1_2")
+                }
+                child("child_2") {
+                    child("child_2_1") {
+                        child("child_2_1_1")
+                    }
+                    child("child_2_2")
+                }
+            }
+        )
+
+        val traversed = mutableListOf<String>()
+
+        tree.traverseInLevelOrder {
+            traversed.add(it.data!!)
+        }
+
+        assertEquals(
+            listOf("root", "child_1", "child_2", "child_1_1", "child_1_2", "child_2_1", "child_2_2", "child_1_1_1", "child_2_1_1"),
+            traversed)
+    }
+
     @Test fun canBeIteratedInPostOrder() {
         val tree: Tree<String> = Tree(
             root("root") {
@@ -254,6 +283,62 @@ class TreeTest {
         assertEquals("root", iter.next().data)
 
         assertFalse(iter.hasNext)
+    }
+
+    @Test fun canBeTraversedInPostOrder() {
+        val tree: Tree<String> = Tree(
+            root("root") {
+                child("child_1") {
+                    child("child_1_1")
+                }
+                child("child_2") {
+                    child("child_2_1")
+                }
+            }
+        )
+
+        val traversed = mutableListOf<String>()
+
+        tree.traverseInPostOrder {
+            traversed.add(it.data!!)
+        }
+
+        assertEquals(
+            listOf("child_1_1", "child_1", "child_2_1", "child_2", "root"),
+            traversed)
+    }
+
+    @Test fun canBeIndexed() {
+        val tree: Tree<String> = Tree(
+            root("root") {
+                child("child_1") {
+                    child("child_1_1") {
+                        child("child_1_1_1")
+                    }
+                    child("child_1_2")
+                }
+                child("child_2") {
+                    child("child_2_1") {
+                        child("child_2_1_1")
+                    }
+                    child("child_2_2")
+                }
+            }
+        )
+
+        tree.traverseInLevelOrder {
+            assertFalse(it.isIndexed)
+        }
+
+        tree.index()
+
+        val indexes = mutableListOf<Int>()
+
+        tree.traverseInPostOrder {
+            indexes.add(it.index)
+        }
+
+        assertEquals((0..8).toList(), indexes)
     }
 }
 

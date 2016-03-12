@@ -5,22 +5,25 @@ import net.devromik.tree.TreeNode.Companion.NOT_INDEXED
 /**
  * @author Shulnyaev Roman
  */
-class TreeNode<T>(
-    parent: TreeNode<T>? = null,
-    private val children: MutableList<TreeNode<T>> = mutableListOf(),
-    var data: T? = null,
-    internal var index: Int = NOT_INDEXED) : Iterable<TreeNode<T>> {
+class TreeNode<D>(
+    parent: TreeNode<D>? = null,
+    private val children: MutableList<TreeNode<D>> = mutableListOf(),
+    var data: D? = null,
+    internal var index: Int = NOT_INDEXED) : Iterable<TreeNode<D>> {
 
     // ****************************** //
 
     companion object {
-        const val NOT_INDEXED: Int = -1;
+        const val NOT_INDEXED: Int = -1
     }
 
     // ****************************** //
 
-    var parent: TreeNode<T>? = parent
+    var parent: TreeNode<D>? = parent
         internal set(value) { field = value }
+
+    val isIndexed: Boolean
+        get() = index != NOT_INDEXED
 
     // ****************************** //
 
@@ -32,13 +35,13 @@ class TreeNode<T>(
 
     val isRoot: Boolean get() = parent == null
 
-    fun child(data: T? = null, init: TreeNode<T>.() -> Unit = {}) {
-        val child: TreeNode<T> = TreeNode(data = data)
+    fun child(data: D? = null, init: TreeNode<D>.() -> Unit = {}) {
+        val child: TreeNode<D> = TreeNode(data = data)
         child.init()
         appendChild(child)
     }
 
-    fun appendChild(child: TreeNode<T>) {
+    fun appendChild(child: TreeNode<D>) {
         children.add(child)
         child.parent = this
     }
@@ -47,12 +50,12 @@ class TreeNode<T>(
     val isLeaf: Boolean get() = children.isEmpty()
     val hasOnlyChild: Boolean get() = childCount == 1
 
-    override fun iterator(): Iterator<TreeNode<T>> = children.iterator()
-    fun childAt(pos: Int): TreeNode<T> = children[pos]
-    val leftmostChild: TreeNode<T>? get() = if (!isLeaf) childAt(0) else null
-    val rightmostChild: TreeNode<T>? get() = if (!isLeaf) childAt(childCount - 1) else null
+    override fun iterator(): Iterator<TreeNode<D>> = children.iterator()
+    fun childAt(pos: Int): TreeNode<D> = children[pos]
+    val leftmostChild: TreeNode<D>? get() = if (!isLeaf) childAt(0) else null
+    val rightmostChild: TreeNode<D>? get() = if (!isLeaf) childAt(childCount - 1) else null
 
-    fun removeChild(child: TreeNode<T>) {
+    fun removeChild(child: TreeNode<D>) {
         children.remove(child)
         child.parent = null
     }
@@ -63,8 +66,8 @@ class TreeNode<T>(
     }
 }
 
-fun <T> root(data: T? = null, init: TreeNode<T>.() -> Unit = {}): TreeNode<T> {
-    val root: TreeNode<T> = TreeNode(data = data)
+fun <D> root(data: D? = null, init: TreeNode<D>.() -> Unit = {}): TreeNode<D> {
+    val root: TreeNode<D> = TreeNode(data = data)
     root.init()
     return root
 }

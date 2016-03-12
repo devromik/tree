@@ -290,12 +290,7 @@ class TreeNodeTest {
         assertTrue(child_3.isRoot)
     }
 
-    @Test fun initiallyIsNotIndexed() {
-        val root: TreeNode<Int> = root {}
-        assertEquals(NOT_INDEXED, root.index)
-    }
-
-    @Test fun childrenCanBeIteratedOver() {
+    @Test fun childrenCanBeIterated() {
         val root: TreeNode<String> =
             root() {
                 child()
@@ -314,6 +309,12 @@ class TreeNodeTest {
         assertEquals(child_3, iter.next())
 
         assertFalse(iter.hasNext())
+    }
+
+    @Test fun initiallyIsNotIndexed() {
+        val root: TreeNode<Int> = root {}
+        assertFalse(root.isIndexed)
+        assertEquals(NOT_INDEXED, root.index)
     }
 }
 

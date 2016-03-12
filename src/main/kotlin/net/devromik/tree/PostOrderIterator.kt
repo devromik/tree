@@ -5,10 +5,10 @@ import java.util.*
 /**
  * @author Shulnyaev Roman
  */
-class PostOrderIterator<T>(root: TreeNode<T>, private val isLeaf: (TreeNode<T>) -> Boolean = { it.isLeaf }) {
+class PostOrderIterator<D>(root: TreeNode<D>, private val isLeaf: (TreeNode<D>) -> Boolean = { it.isLeaf }) {
 
-    private val traversalOrder: Deque<TreeNode<T>>
-    private val traversedNodes = mutableSetOf<TreeNode<T>>()
+    private val traversalOrder: Deque<TreeNode<D>>
+    private val traversedNodes = mutableSetOf<TreeNode<D>>()
 
     // ****************************** //
 
@@ -19,9 +19,9 @@ class PostOrderIterator<T>(root: TreeNode<T>, private val isLeaf: (TreeNode<T>) 
 
     // ****************************** //
 
-    val hasNext: Boolean get() = !traversalOrder.isEmpty();
+    val hasNext: Boolean get() = !traversalOrder.isEmpty()
 
-    fun next(): TreeNode<T> {
+    fun next(): TreeNode<D> {
         while (true) {
             val first = traversalOrder.peek()
 
