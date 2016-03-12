@@ -9,7 +9,7 @@ class TreeNode<T>(
     parent: TreeNode<T>? = null,
     private val children: MutableList<TreeNode<T>> = mutableListOf(),
     var data: T? = null,
-    internal var index: Int = NOT_INDEXED) {
+    internal var index: Int = NOT_INDEXED) : Iterable<TreeNode<T>> {
 
     // ****************************** //
 
@@ -47,6 +47,7 @@ class TreeNode<T>(
     val isLeaf: Boolean get() = children.isEmpty()
     val hasOnlyChild: Boolean get() = childCount == 1
 
+    override fun iterator(): Iterator<TreeNode<T>> = children.iterator()
     fun childAt(pos: Int): TreeNode<T> = children[pos]
     val leftmostChild: TreeNode<T>? get() = if (!isLeaf) childAt(0) else null
     val rightmostChild: TreeNode<T>? get() = if (!isLeaf) childAt(childCount - 1) else null
