@@ -340,6 +340,51 @@ class TreeTest {
 
         assertEquals((0..8).toList(), indexes)
     }
+
+    @Test fun canCountSizesOfSubtreesOfIndexedTree() {
+        val tree: Tree<String> = Tree(
+            root("root") {
+                child("child_1") {
+                    child("child_1_1") {
+                        child("child_1_1_1")
+                    }
+                    child("child_1_2")
+                }
+                child("child_2") {
+                    child("child_2_1") {
+                        child("child_2_1_1")
+                    }
+                    child("child_2_2")
+                }
+            }
+        )
+
+        tree.index()
+        val sizes = tree.countSubtreeSizes()
+
+        assertEquals(9, sizes[tree.root])
+
+        val child_1 = tree.root.childAt(0)
+        assertEquals(4, sizes[child_1])
+
+        val child_1_1 = child_1.childAt(0)
+        assertEquals(2, sizes[child_1_1])
+
+        val child_1_1_1 = child_1_1.childAt(0)
+        assertEquals(1, sizes[child_1_1_1])
+
+        val child_1_2 = child_1.childAt(1)
+        assertEquals(1, sizes[child_1_2])
+
+        val child_2 = tree.root.childAt(1)
+        assertEquals(4, sizes[child_2])
+
+        val child_2_1 = child_2.childAt(0)
+        assertEquals(2, sizes[child_2_1])
+
+        val child_2_2 = child_2.childAt(1)
+        assertEquals(1, sizes[child_2_2])
+    }
 }
 
 
