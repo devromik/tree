@@ -26,10 +26,11 @@ class PostOrderIterator<D>(root: TreeNode<D>, private val isLeaf: (TreeNode<D>) 
             val first = traversalOrder.peek()
 
             if (!isLeaf(first)) {
-                for (child in first) {
+                for (i in first.childCount - 1 downTo 0) {
+                    val child = first.childAt(i)
+
                     if (child !in traversedNodes) {
                         traversalOrder.addFirst(child)
-                        break
                     }
                 }
             }
