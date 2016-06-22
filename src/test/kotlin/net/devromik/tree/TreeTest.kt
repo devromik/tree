@@ -308,7 +308,7 @@ class TreeTest {
             traversed)
     }
 
-    @Test fun canBeIndexed() {
+    @Test fun canBeIndexed_1() {
         val tree: Tree<String> = Tree(
             root("root") {
                 child("child_1") {
@@ -339,6 +339,50 @@ class TreeTest {
         }
 
         assertEquals((0..8).toList(), indexes)
+    }
+
+    @Test fun canBeIndexed_2() {
+        val tree: Tree<String> = Tree(
+            root("root") {
+                child {
+                    child {
+                        child {
+                            child()
+                            child()
+                        }
+                        child()
+                    }
+                    child()
+                }
+                child {
+                    child {
+                        child {
+                            child()
+                        }
+                    }
+                    child {
+                        child {
+                            child()
+                        }
+                    }
+                }
+                child()
+            }
+        )
+
+        tree.traverseInLevelOrder {
+            assertFalse(it.isIndexed)
+        }
+
+        tree.index()
+
+        val indexes = mutableListOf<Int>()
+
+        tree.traverseInPostOrder {
+            indexes.add(it.index)
+        }
+
+        assertEquals((0..15).toList(), indexes)
     }
 
     @Test fun canCountSizesOfSubtreesOfIndexedTree() {
